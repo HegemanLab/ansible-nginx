@@ -1,8 +1,10 @@
 ---
 
-- name: Install EPEL nginx
+- name: Install EPEL and EPEL nginx
   yum:
-    pkg: nginx
+    name:
+      - epel-release
+      - nginx
   notify:
     - restart nginx
     - supervisorctl restart nginx
