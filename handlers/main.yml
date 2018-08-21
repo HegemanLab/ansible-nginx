@@ -6,12 +6,14 @@
     name: nginx
     state: reloaded
   when: not nginx_supervisor
+  become: yes
 
 - name: restart nginx
   service:
     name: nginx
     state: restarted
   when: not nginx_supervisor
+  become: yes
 
 - name: supervisorctl reload nginx
   # TODO: do this better
