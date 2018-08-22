@@ -1,14 +1,19 @@
 ---
 
-- name: Install EPEL and EPEL nginx
+- name: Install EPEL
   yum:
-    name:
-      - epel-release
-      - nginx
+    name: epel-release
+  when: nginx_flavor != "galaxy"
+  become: yes
+
+- name: Install EPEL nginx
+  yum:
+    name: nginx
   notify:
     - restart nginx
     - supervisorctl restart nginx
   when: nginx_flavor != "galaxy"
+  become: yes
 
 - name: Install Galaxy nginx
   yum:
