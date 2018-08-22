@@ -5,6 +5,7 @@
     pkg: nginx-{{ nginx_flavor }}
   notify:
     - restart nginx
+  become: yes
 
 - name: Disable default vhost
   file:
@@ -12,3 +13,4 @@
     state: absent
   notify:
     - reload nginx
+  become: yes
