@@ -13,6 +13,9 @@ nginx_conf_dir: /etc/nginx
 nginx_conf_file: "{{ nginx_conf_dir }}/nginx.conf"
 nginx_ssl_conf_dir: "{{ nginx_conf_dir }}/ssl"
 
+# enable proxy_pass by setting it to a URI
+nginx_proxy_pass: no
+
 # SSL defaults (version dependent ones such as ssl_protocols can be found in the template)
 nginx_conf_ssl_ciphers:
   - ECDHE-ECDSA-AES128-GCM-SHA256
