@@ -12,3 +12,13 @@
     state: absent
   notify:
     - reload nginx
+
+- name: Template nginx config file
+  template:
+    src: apt-nginx.conf.j2
+    dest: "{{ nginx_conf_dir }}/nginx.conf"
+    backup: yes
+  notify:
+    - restart nginx
+    - supervisorctl restart nginx
+  become: yes
