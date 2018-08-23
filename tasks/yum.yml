@@ -7,6 +7,7 @@
     - restart nginx
     - supervisorctl restart nginx
   when: nginx_flavor != "galaxy"
+  become: yes
 
 - name: Install Galaxy nginx
   yum:
@@ -15,6 +16,7 @@
     - restart nginx
     - supervisorctl restart nginx
   when: nginx_flavor == "galaxy"
+  become: yes
 
 - name: Set permissions on temporary directories
   file:
@@ -26,6 +28,7 @@
   with_items:
     - /var/lib/nginx
     - /var/lib/nginx/tmp
+  become: yes
 
 - name: Template nginx config file
   template:
@@ -35,6 +38,7 @@
   notify:
     - restart nginx
     - supervisorctl restart nginx
+  become: yes
 
 - name: Create virtual host directories
   file:
@@ -47,6 +51,7 @@
   notify:
     - reload nginx
     - supervisorctl reload nginx
+  become: yes
 
 - name: Create config including virtual hosts
   copy:
@@ -57,6 +62,7 @@
   notify:
     - reload nginx
     - supervisorctl reload nginx
+  become: yes
 
 - name: Set default server redirection
   copy:
