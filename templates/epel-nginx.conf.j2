@@ -37,21 +37,27 @@ http {
     # for more information.
     include /etc/nginx/conf.d/*.conf;
 
-    {% if nginx_enable_default_server | default(true) %}
+{% if nginx_enable_default_server | default(true) %}
     server {
         listen       80 default_server;
-        {% if nginx_enable_default_ipv6 %}
+{% if nginx_enable_default_ipv6 %}
         listen       [::]:80 default_server;
-        {% endif %}
+{% endif %}
         server_name  _;
+{% if nginx_proxy_pass == false %}
         root         /usr/share/nginx/html;
+{% endif %}
 
         # Load configuration files for the default server block.
         include /etc/nginx/default.d/*.conf;
 
         location / {
+{% if nginx_proxy_pass %}
+            proxy_pass {{nginx_proxy_pass}};
+{% endif %}
         }
 
+{% if nginx_proxy_pass == false %}
         error_page 404 /404.html;
             location = /40x.html {
         }
@@ -59,6 +65,7 @@ http {
         error_page 500 502 503 504 /50x.html;
             location = /50x.html {
         }
+{% endif %}
     }
-    {% endif %}
+{% endif %}
 }
