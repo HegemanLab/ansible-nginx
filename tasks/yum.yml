@@ -1,8 +1,13 @@
 ---
 
+- name: Install EPEL
+  yum:
+    name: epel-release
+  when: nginx_flavor != "galaxy"
+
 - name: Install EPEL nginx
   yum:
-    pkg: nginx
+    name: nginx
   notify:
     - restart nginx
     - supervisorctl restart nginx
